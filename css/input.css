@@ -1,0 +1,369 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+:root {
+  --color-brand-red: #b91c1c;
+  --color-brand-red-dark: #7f1d1d;
+  --color-brand-red-light: #dc2626;
+  --color-brand-gold: #f59e0b;
+  --color-brand-gold-light: #fbbf24;
+  --color-brand-gold-dark: #d97706;
+
+  --color-ink: #1a1a1a;
+  --color-ink-muted: #4b5563;
+  --color-ink-soft: #6b7280;
+
+  --color-paper: #ffffff;
+  --color-paper-warm: #fef9f0;
+
+  --font-display: "PT Serif", Georgia, serif;
+  --font-sans: "PT Sans", system-ui, sans-serif;
+
+  --header-h: 4.5rem;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    border-radius: 0;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-brand-gold) 40%, transparent);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8 lg:px-10;
+  }
+
+  .site-header {
+    @apply fixed inset-x-0 top-0 z-50 border-b-2 border-brand-gold bg-brand-red-dark text-paper shadow-md transition-shadow duration-300;
+  }
+
+  .site-header.is-scrolled {
+    @apply shadow-lg;
+  }
+
+  .site-header__bar {
+    @apply flex h-[var(--header-h)] items-center justify-between gap-4;
+  }
+
+  .site-header__brand {
+    @apply flex shrink-0 items-center gap-3;
+  }
+
+  .site-header__logo {
+    @apply flex size-10 items-center justify-center bg-brand-gold font-display text-lg font-bold text-brand-red-dark;
+  }
+
+  .site-header__title {
+    @apply font-display text-lg font-bold leading-tight sm:text-xl;
+  }
+
+  .site-header__subtitle {
+    @apply text-[0.65rem] uppercase tracking-wider text-brand-gold-light/90;
+  }
+
+  .site-header__nav {
+    @apply hidden items-center gap-5 lg:flex;
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-paper/90 transition-colors hover:text-brand-gold-light;
+  }
+
+  .site-header__phone {
+    @apply hidden text-sm font-semibold text-brand-gold-light md:block;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-brand-gold px-6 py-3 text-sm font-bold uppercase tracking-wide text-brand-red-dark transition-colors hover:bg-brand-gold-light;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 border-2 border-brand-gold px-6 py-3 text-sm font-bold uppercase tracking-wide text-brand-gold transition-colors hover:bg-brand-gold hover:text-brand-red-dark;
+  }
+
+  .btn-red {
+    @apply inline-flex items-center justify-center gap-2 bg-brand-red px-6 py-3 text-sm font-bold uppercase tracking-wide text-paper transition-colors hover:bg-brand-red-light;
+  }
+
+  .section {
+    @apply scroll-mt-[var(--header-h)] py-16 sm:py-20;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-bold text-brand-red-dark sm:text-4xl;
+  }
+
+  .section-title--light {
+    @apply text-paper;
+  }
+
+  .section-subtitle {
+    @apply mt-2 text-brand-gold-dark;
+  }
+
+  .section--red {
+    @apply bg-brand-red-dark text-paper;
+  }
+
+  .section--warm {
+    @apply bg-paper-warm text-ink;
+  }
+
+  .section--white {
+    @apply bg-paper text-ink;
+  }
+
+  .hero-slider {
+    @apply relative min-h-[28rem] overflow-hidden sm:min-h-[32rem];
+  }
+
+  .hero-slide {
+    @apply absolute inset-0 flex items-center justify-center bg-brand-red-dark px-6 opacity-0 transition-opacity duration-700;
+  }
+
+  .hero-slide.is-active {
+    @apply opacity-100;
+  }
+
+  .hero-slide__content {
+    @apply max-w-3xl text-center;
+  }
+
+  .hero-slide__title {
+    @apply font-display text-3xl font-bold leading-tight text-brand-gold-light sm:text-5xl;
+  }
+
+  .hero-slide__text {
+    @apply mt-4 text-lg text-paper/90 sm:text-xl;
+  }
+
+  .hero-slider__dots {
+    @apply absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2;
+  }
+
+  .hero-slider__dot {
+    @apply size-3 border-2 border-brand-gold bg-transparent transition-colors;
+  }
+
+  .hero-slider__dot.is-active {
+    @apply bg-brand-gold;
+  }
+
+  .advantage-card {
+    @apply flex flex-col items-center border-2 border-brand-red/20 bg-paper p-6 text-center transition-shadow hover:shadow-lg;
+  }
+
+  .advantage-card__icon {
+    @apply mb-4 flex size-14 items-center justify-center bg-brand-red text-2xl text-brand-gold;
+  }
+
+  .advantage-card__text {
+    @apply text-sm leading-relaxed text-ink-muted;
+  }
+
+  .stat-card {
+    @apply border-l-4 border-brand-gold bg-paper/10 px-6 py-4;
+  }
+
+  .stat-card__value {
+    @apply font-display text-2xl font-bold text-brand-gold-light;
+  }
+
+  .stat-card__label {
+    @apply mt-1 text-sm text-paper/85;
+  }
+
+  .tab-btn {
+    @apply flex-1 border-2 border-brand-red px-6 py-4 text-center text-sm font-bold uppercase tracking-wide transition-colors;
+  }
+
+  .tab-btn.is-active {
+    @apply bg-brand-red text-paper;
+  }
+
+  .tab-btn:not(.is-active) {
+    @apply bg-paper text-brand-red hover:bg-brand-red/5;
+  }
+
+  .service-list {
+    @apply mt-8 grid gap-3 sm:grid-cols-2;
+  }
+
+  .service-item {
+    @apply flex items-start gap-3 border border-brand-red/20 bg-paper px-4 py-3 text-sm;
+  }
+
+  .service-item::before {
+    content: "▸";
+    @apply shrink-0 font-bold text-brand-red;
+  }
+
+  .price-card {
+    @apply border-2 border-brand-red/20 bg-paper p-6 text-center;
+  }
+
+  .price-card__value {
+    @apply mt-2 font-display text-2xl font-bold text-brand-red;
+  }
+
+  .case-card {
+    @apply border-l-4 border-brand-gold bg-paper p-5 shadow-sm;
+  }
+
+  .case-card__title {
+    @apply font-display text-lg font-bold text-brand-red-dark;
+  }
+
+  .case-card__result {
+    @apply mt-2 text-sm font-semibold text-brand-gold-dark;
+  }
+
+  .client-badge {
+    @apply flex items-center justify-center border-2 border-brand-red/20 bg-paper px-4 py-6 text-center text-sm font-semibold text-ink-muted;
+  }
+
+  .review-card {
+    @apply border-2 border-brand-red/15 bg-paper p-6;
+  }
+
+  .review-card__author {
+    @apply font-bold text-brand-red-dark;
+  }
+
+  .review-card__text {
+    @apply mt-3 text-sm leading-relaxed text-ink-muted;
+  }
+
+  .modal {
+    @apply fixed inset-0 z-[100] flex items-center justify-center p-4;
+  }
+
+  .modal[hidden] {
+    display: none;
+  }
+
+  .modal__backdrop {
+    @apply absolute inset-0 bg-black/60;
+  }
+
+  .modal__dialog {
+    @apply relative z-10 w-full max-w-md border-4 border-brand-gold bg-paper p-6 shadow-2xl;
+  }
+
+  .modal__title {
+    @apply font-display text-xl font-bold text-brand-red-dark;
+  }
+
+  .form-field {
+    @apply mt-4;
+  }
+
+  .form-label {
+    @apply mb-1 block text-sm font-medium text-ink-muted;
+  }
+
+  .form-input {
+    @apply w-full border-2 border-brand-red/30 px-4 py-3 text-sm focus:border-brand-red focus:outline-none;
+  }
+
+  .form-note {
+    @apply mt-4 text-xs text-ink-soft;
+  }
+
+  .accordion-item {
+    @apply border-b border-brand-red/20;
+  }
+
+  .accordion-trigger {
+    @apply flex w-full items-center justify-between py-4 text-left font-semibold text-brand-red-dark transition-colors hover:text-brand-red;
+  }
+
+  .accordion-trigger::after {
+    content: "+";
+    @apply text-2xl font-light text-brand-gold;
+  }
+
+  .accordion-trigger[aria-expanded="true"]::after {
+    content: "−";
+  }
+
+  .accordion-panel {
+    @apply overflow-hidden pb-4 text-sm text-ink-muted;
+  }
+
+  .accordion-panel[hidden] {
+    display: none;
+  }
+
+  .accordion-panel ul {
+    @apply ml-4 list-disc space-y-1;
+  }
+
+  .price-table {
+    @apply w-full border-collapse text-sm;
+  }
+
+  .price-table th,
+  .price-table td {
+    @apply border border-brand-red/20 px-4 py-3 text-left align-top;
+  }
+
+  .price-table th {
+    @apply bg-brand-red-dark font-semibold text-paper;
+  }
+
+  .price-table tr:nth-child(even) td {
+    @apply bg-paper-warm;
+  }
+
+  .site-footer {
+    @apply border-t-4 border-brand-gold bg-brand-red-dark py-8 text-paper/80;
+  }
+
+  .site-footer a {
+    @apply text-brand-gold-light hover:text-brand-gold;
+  }
+
+  .mobile-nav {
+    @apply border-t border-brand-gold/30 bg-brand-red-dark lg:hidden;
+  }
+
+  .mobile-nav[hidden] {
+    display: none;
+  }
+
+  .map-frame {
+    @apply aspect-[4/3] w-full border-2 border-brand-red/20 bg-paper-warm;
+  }
+}
